@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_bank_transactions
+    description: "Limpeza e tipagem da tabela raw bank_transactions"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values: ['credit', 'debit']
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['processed', 'pending', 'failed']

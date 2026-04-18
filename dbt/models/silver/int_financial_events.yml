@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: int_financial_events
+    description: "Modelo intermediário unificado de eventos financeiros"
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: source
+        tests:
+          - accepted_values:
+              values: ['bank', 'card', 'acquirer']

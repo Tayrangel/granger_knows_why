@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg_acquirer_transactions
+    description: "Limpeza e tipagem da tabela raw acquirer_transactions"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['pending', 'settled', 'reversed']
+      - name: card_transaction_id
+        tests:
+          - relationships:
+              to: ref('stg_card_transactions')
+              field: transaction_id

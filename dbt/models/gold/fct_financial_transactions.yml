@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_financial_transactions
+    description: "Tabela fato principal de transações financeiras"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: source
+        tests:
+          - accepted_values:
+              values: ['bank', 'card', 'acquirer']
+      - name: amount_gross
+        tests:
+          - not_null
+      - name: event_date
+        tests:
+          - not_null

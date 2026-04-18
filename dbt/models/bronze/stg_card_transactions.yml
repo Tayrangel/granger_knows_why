@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_card_transactions
+    description: "Limpeza e tipagem da tabela raw card_transactions"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: event_type
+        tests:
+          - accepted_values:
+              values: ['authorization', 'capture', 'cancellation']
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['approved', 'cancelled', 'pending']
