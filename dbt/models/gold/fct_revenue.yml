@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: fct_revenue
+    description: "Métricas de receita e performance financeira"
+    columns:
+      - name: gross_revenue
+        description: "Receita bruta total. ARMADILHA: Inclui transações não liquidadas."
+        tests:
+          - not_null
+      - name: net_revenue
+        description: "Receita líquida real (apenas liquidadas)."
+        tests:
+          - not_null
+      - name: tpv
+        description: "Total Payment Volume. ARMADILHA: Soma bruta de múltiplas fontes, pode conter duplicidade."
+        tests:
+          - not_null
+      - name: acquirer_fee_rate
+        description: "Taxa média de adquirência."
+      - name: daily_balance
+        description: "Saldo diário capturado via extrato bancário."
