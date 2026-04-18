@@ -1,18 +1,14 @@
-import os
 import json
 import time
 from typing import Dict, Any
-from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage
+from agent.config import GROQ_API_KEY, GROQ_MODEL, AGENT_TEMPERATURE
 from agent.tools import query_metrics_tool, check_data_quality_tool, explain_metric_tool
 from agent.context_loader import get_analytics_context
 from agent.prompts import GRANGER_SYSTEM_PROMPT
 from agent.logger import log_analysis
-
-load_dotenv()
 
 def get_granger_agent(data_context: str) -> AgentExecutor:
     """
@@ -25,9 +21,9 @@ def get_granger_agent(data_context: str) -> AgentExecutor:
         Configured AgentExecutor instance
     """
     llm: ChatGroq = ChatGroq(
-        model="llama-3.3-70b-versatile",
-        temperature=0.1,
-        api_key=os.getenv("GROQ_API_KEY")
+        model=GROQ_MODEL,
+        temperature=AGENT_TEMPERATURE,
+        api_key=GROQ_API_KEY
     )
 
     tools = [query_metrics_tool, check_data_quality_tool, explain_metric_tool]

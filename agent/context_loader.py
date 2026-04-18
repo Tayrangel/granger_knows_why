@@ -1,11 +1,8 @@
-import os
 import time
 from typing import Dict, Any
 import psycopg2
-from dotenv import load_dotenv
+from agent.config import POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
 from agent.logger import log_context_load
-
-load_dotenv()
 
 def get_analytics_context() -> Dict[str, Any]:
     """
@@ -16,11 +13,11 @@ def get_analytics_context() -> Dict[str, Any]:
     
     try:
         conn: psycopg2.extensions.connection = psycopg2.connect(
-            host=os.getenv('POSTGRES_HOST', 'localhost'),
-            port=os.getenv('POSTGRES_PORT', '5432'),
-            database=os.getenv('POSTGRES_DB', 'granger_db'),
-            user=os.getenv('POSTGRES_USER', 'granger'),
-            password=os.getenv('POSTGRES_PASSWORD', 'granger_pass')
+            host=POSTGRES_HOST,
+            port=POSTGRES_PORT,
+            database=POSTGRES_DB,
+            user=POSTGRES_USER,
+            password=POSTGRES_PASSWORD
         )
         cur = conn.cursor()
         

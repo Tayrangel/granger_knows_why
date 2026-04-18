@@ -9,10 +9,11 @@ import time
 from datetime import datetime
 from typing import Any, Dict, Optional
 from functools import wraps
+from agent.config import LOG_LEVEL
 
 # Configure JSON logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=LOG_LEVEL,
     format='%(message)s'
 )
 

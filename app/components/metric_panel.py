@@ -1,21 +1,18 @@
 import streamlit as st
 import pandas as pd
 import psycopg2
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+from agent.config import POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
 
 def render_metric_panel():
     st.subheader("📊 Métricas de Hoje")
     
     try:
         conn = psycopg2.connect(
-            host=os.getenv('POSTGRES_HOST'),
-            port=os.getenv('POSTGRES_PORT'),
-            database=os.getenv('POSTGRES_DB'),
-            user=os.getenv('POSTGRES_USER'),
-            password=os.getenv('POSTGRES_PASSWORD')
+            host=POSTGRES_HOST,
+            port=POSTGRES_PORT,
+            database=POSTGRES_DB,
+            user=POSTGRES_USER,
+            password=POSTGRES_PASSWORD
         )
         df = pd.read_sql("SELECT * FROM fct_revenue ORDER BY reference_date DESC LIMIT 1", conn)
         conn.close()

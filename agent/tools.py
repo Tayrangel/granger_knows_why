@@ -1,21 +1,18 @@
-import os
 import time
 from typing import Dict, Any, Union
 import psycopg2
 from langchain.tools import tool
-from dotenv import load_dotenv
+from agent.config import POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
 from agent.logger import log_tool_call
-
-load_dotenv()
 
 def _get_conn() -> psycopg2.extensions.connection:
     """Get database connection."""
     return psycopg2.connect(
-        host=os.getenv('POSTGRES_HOST'),
-        port=os.getenv('POSTGRES_PORT'),
-        database=os.getenv('POSTGRES_DB'),
-        user=os.getenv('POSTGRES_USER'),
-        password=os.getenv('POSTGRES_PASSWORD')
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT,
+        database=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD
     )
 
 @tool

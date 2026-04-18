@@ -1,12 +1,8 @@
-"""
-Rate limiting module for API protection.
-Prevents abuse and controls costs for external APIs like Groq.
-"""
-
 import time
 from functools import wraps
 from collections import defaultdict
 from typing import Callable, Any, Dict, List
+from agent.config import RATE_LIMIT_CALLS, RATE_LIMIT_PERIOD
 
 
 class RateLimiter:
@@ -117,5 +113,5 @@ class RateLimitExceeded(Exception):
     pass
 
 
-# Global rate limiter for API calls (10 per hour per user)
-api_rate_limiter = RateLimiter(calls=10, period=3600)
+# Global rate limiter for API calls
+api_rate_limiter = RateLimiter(calls=RATE_LIMIT_CALLS, period=RATE_LIMIT_PERIOD)

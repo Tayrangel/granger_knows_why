@@ -5,9 +5,6 @@ from components.metric_panel import render_metric_panel
 from components.response_card import render_response_card
 from agent.agent import analyze
 from agent.rate_limiter import api_rate_limiter, RateLimitExceeded
-from dotenv import load_dotenv
-
-load_dotenv()
 
 st.set_page_config(page_title="Granger Knows Why", page_icon="🕵️", layout="wide")
 
