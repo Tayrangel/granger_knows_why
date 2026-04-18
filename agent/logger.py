@@ -80,11 +80,9 @@ def log_analysis(
     
     if error:
         extra['error'] = error
-        extra['extra_fields'] = extra
-        logger.error(error, extra=extra)
+        logger.error(error, extra={'extra_fields': extra})
     else:
-        extra['extra_fields'] = extra
-        logger.info('Analysis request completed', extra=extra)
+        logger.info('Analysis request completed', extra={'extra_fields': extra})
 
 
 def log_tool_call(
@@ -114,11 +112,9 @@ def log_tool_call(
     
     if error:
         extra['error'] = error
-        extra['extra_fields'] = extra
-        logger.error(f'Tool call failed: {tool_name}', extra=extra)
+        logger.error(f'Tool call failed: {tool_name}', extra={'extra_fields': extra})
     else:
-        extra['extra_fields'] = extra
-        logger.info(f'Tool call succeeded: {tool_name}', extra=extra)
+        logger.info(f'Tool call succeeded: {tool_name}', extra={'extra_fields': extra})
 
 
 def log_context_load(
@@ -142,11 +138,9 @@ def log_context_load(
     
     if error:
         extra['error'] = error
-        extra['extra_fields'] = extra
-        logger.warning(f'Context load failed: {error}', extra=extra)
+        logger.warning(f'Context load failed: {error}', extra={'extra_fields': extra})
     else:
-        extra['extra_fields'] = extra
-        logger.info('Context loaded from database', extra=extra)
+        logger.info('Context loaded from database', extra={'extra_fields': extra})
 
 
 def timing_decorator(func):
@@ -168,15 +162,9 @@ def timing_decorator(func):
                 'event': 'function_call',
                 'function': func.__name__,
                 'duration_ms': round(duration_ms, 2),
-                'status': 'success',
-                'extra_fields': {
-                    'event': 'function_call',
-                    'function': func.__name__,
-                    'duration_ms': round(duration_ms, 2),
-                    'status': 'success'
-                }
+                'status': 'success'
             }
-            logger.info(f'Function {func.__name__} executed', extra=extra)
+            logger.info(f'Function {func.__name__} executed', extra={'extra_fields': extra})
             return result
         except Exception as e:
             duration_ms = (time.time() - start_time) * 1000
@@ -185,16 +173,9 @@ def timing_decorator(func):
                 'function': func.__name__,
                 'duration_ms': round(duration_ms, 2),
                 'status': 'error',
-                'error': str(e),
-                'extra_fields': {
-                    'event': 'function_call',
-                    'function': func.__name__,
-                    'duration_ms': round(duration_ms, 2),
-                    'status': 'error',
-                    'error': str(e)
-                }
+                'error': str(e)
             }
-            logger.error(f'Function {func.__name__} failed', extra=extra)
+            logger.error(f'Function {func.__name__} failed', extra={'extra_fields': extra})
             raise
     
     return wrapper
